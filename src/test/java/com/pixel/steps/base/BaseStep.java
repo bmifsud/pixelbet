@@ -1,10 +1,14 @@
 package com.pixel.steps.base;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+import java.nio.file.Path;
+import java.util.List;
 
 
 public class BaseStep {
@@ -44,16 +48,7 @@ public class BaseStep {
 
     public void geturl(String url)
     {
-        //Browser to be selected here depending on config
-//        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\resources\\drivers\\chromedriver.exe");
-//        System.setProperty("webdriver.chrome.whitelistedIps", "");
-//        driver = new ChromeDriver();
-//        driver.manage().window().maximize();
-
-
-        // Environments to be assigned here (QA, Staging, Live)
         driver.get(url);
-
     }
 
 
@@ -70,7 +65,7 @@ public class BaseStep {
     }
     public void findElementClick(String path, Pather type) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, TimeOut.MIDDLE.value);
+            WebDriverWait wait = new WebDriverWait(driver, TimeOut.HIGH.value);
             switch (type) {
                 case className:
                     wait.until(ExpectedConditions.elementToBeClickable(By.className(path))).click();
@@ -96,6 +91,42 @@ public class BaseStep {
 
         } catch (Exception ex) { }
     }
+
+    // This is used for non-clickable elements
+    public void findElementActionClick(String path, Pather type) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, TimeOut.MIDDLE.value);
+            WebElement element;
+            Actions actions = new Actions(driver);
+
+            switch (type) {
+                case className:
+                    actions.moveToElement(driver.findElement(By.className(path))).click().perform();
+                    break;
+                case id:
+                    actions.moveToElement(driver.findElement(By.id(path))).click().perform();
+                    break;
+                case name:
+                    actions.moveToElement(driver.findElement(By.name(path))).click().perform();
+                    break;
+                case xPath:
+                    actions.moveToElement(driver.findElement(By.xpath(path))).click().perform();
+                    break;
+                case cssSelector:
+                    actions.moveToElement(driver.findElement(By.cssSelector(path))).click().perform();
+                    break;
+                case linkText:
+                    actions.moveToElement(driver.findElement(By.linkText(path))).click().perform();
+                    break;
+                default:
+                    new NotFoundException();
+            }
+
+
+
+        } catch (Exception ex) { }
+    }
+
     public WebElement findElement(String path, Pather type,TimeOut timeOut) {
 
         try {
@@ -131,18 +162,115 @@ public class BaseStep {
         }
     }
 
+    public void waitForElementNotPresent(String path, Pather type,TimeOut timeOut) {
 
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeOut.value);
+            switch (type) {
+                case className:
+                    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className(path)));
+                    break;
+                case id:
+                    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(path)));
+                    break;
+                case name:
+                    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.name(path)));
+                    break;
+                case xPath:
+                    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(path)));
+                    break;
+                case cssSelector:
+                    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(path)));
+                    break;
+                case linkText:
+                    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText(path)));
+                    break;
+                default:
+                    new NotFoundException();
+            }
+
+        }
+        catch (Exception ex){}
+    }
+
+    public void SelectFrame(String path, Pather type,TimeOut timeOut) {
+
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeOut.value);
+            switch (type) {
+                case className:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className(path)));
+                    break;
+                case id:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id(path)));
+                    break;
+                case name:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.name(path)));
+                    break;
+                case xPath:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath(path)));
+                    break;
+                case cssSelector:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector(path)));
+                    break;
+                case linkText:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.linkText(path)));
+                    break;
+                default:
+                    new NotFoundException();
+            }
+
+        }
+        catch (Exception ex){}
+    }
+
+
+    public void waitForIFrameToLoad(String path, Pather type,TimeOut timeOut) {
+
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeOut.value);
+            switch (type) {
+                case className:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className(path)));
+                    break;
+                case id:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id(path)));
+                    break;
+                case name:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.name(path)));
+                    break;
+                case xPath:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath(path)));
+                    break;
+                case cssSelector:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector(path)));
+                    break;
+                case linkText:
+                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.linkText(path)));
+                    break;
+                default:
+                    new NotFoundException();
+            }
+
+        }
+        catch (Exception ex){}
+    }
+
+    public boolean isTextPresent(String text) {
+        List<WebElement> foundElements = driver.findElements(By.xpath("//*[contains(text(), '" + text + "')]"));
+        return foundElements.size() > 0;
+    }
 
 
     public void PageScrolldown() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollBy(0,300)", "");
+        jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
     }
 
     public void PageScrollup() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollBy(0,-300)", "");
+        jse.executeScript("window.scrollTo(0, 0)");
     }
     public void DriverQuit() {
         driver.quit(); }

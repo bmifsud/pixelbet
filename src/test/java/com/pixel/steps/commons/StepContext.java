@@ -16,6 +16,7 @@ public class StepContext {
     private WebDriver driver;
     private final String serverURL = "https://pixel.bet";
     private final String languageURL = "/en";
+    private String gameNameContext;
 
 
     @PostConstruct
@@ -36,5 +37,14 @@ public class StepContext {
 
     public String getLanguageURL() {
         return languageURL;
+    }
+
+    public String getGameNameContext() {
+        return gameNameContext;
+    }
+
+
+    public void setGameNameContext(String gameNameContext) {
+        this.gameNameContext = gameNameContext;
     }
 }

@@ -28,6 +28,8 @@ public class LoginSteps extends BaseStep {
         try {
             //Opens Main page
             geturl(stepContext.getServerURL());
+            //Clear cookies notification
+            findElementClick("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -57,6 +59,7 @@ public class LoginSteps extends BaseStep {
                     ||(!Boolean.parseBoolean(granted)
                     && findElement("pixelBalance",Pather.id,TimeOut.HIGH) != null)){
 
+                //Then above true then fail test
                 Assert.fail();
                 DriverQuit();
             }
@@ -83,7 +86,8 @@ public class LoginSteps extends BaseStep {
     public void theUserPressLogin() throws Throwable {
         try {
             //Pressing Enter
-            findElement("password",Pather.id,TimeOut.LOW).sendKeys(Keys.ENTER);
+            findElement("password",Pather.id,TimeOut.MIDDLE).sendKeys(Keys.ENTER);
+
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -94,14 +98,18 @@ public class LoginSteps extends BaseStep {
     @And("the user exits with logout")
     public void theUserExitsWithLogout() {
         findElementClick("#nav-menu-icon > div",Pather.cssSelector);
+        PageScrolldown();
         findElementClick("body > div:nth-child(18) > div.fade.MenuModal.right.in.modal > div > div > div.modal-body > div.account-menu-container > a.account-menu.logout",Pather.cssSelector);
         DriverQuit();
     }
 
+    // Used in Casino Steps and other future step classes as a background.
     @Given("the user is logged in")
     public void the_user_is_logged_in() {
         //Opens Main page
         geturl(stepContext.getServerURL());
+        //Clear cookies notification
+        findElementClick("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector);
         //Clicks login button
         findElementClick("#pixel-header > div > div.user-section > div.header-buttons-container > a.menu-text.login-button",Pather.cssSelector);
         //Enters Valid Username
@@ -110,6 +118,8 @@ public class LoginSteps extends BaseStep {
         findElement("password",Pather.id,TimeOut.LOW).sendKeys("bV3etsZ5FG!QU5Z");
         //Press Enter key
         findElement("password",Pather.id,TimeOut.LOW).sendKeys(Keys.ENTER);
+        //Confirms login
+        if(findElement("pixelBalance",Pather.id,TimeOut.HIGH) == null){Assert.fail();}
     }
 
 }

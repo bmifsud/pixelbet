@@ -1,10 +1,18 @@
 Feature: CasinoGames
   @casino
-    Scenario: User attempt to load all games through search functionality
+    Scenario Outline: User attempt to search a game through search functionality by <GameName>
     Given the user is logged in
     And the user navigates to Casino page
     When the user view search dialogue
-    And the user uses wild card to load all games
-    And the users scrolls and saves all game names
-    Then the user is confirms all the games accessed have loaded
+    And the user searches for <GameName>
+    And the user opens the game
+    Then the user is confirms the game has loaded
+    And the user exits game
     And the user exits with logout
+    Examples:
+      | GameName                  |
+      #Valid
+      | Fat Rabbit                |
+      | Cash Truck                |
+      #Test Validator (Test Expected to fail)
+      #| InvalidName              |
