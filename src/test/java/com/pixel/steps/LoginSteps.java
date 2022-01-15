@@ -1,4 +1,4 @@
-package com.pixel.steps.login;
+package com.pixel.steps;
 
 import com.pixel.steps.base.BaseStep;
 import com.pixel.steps.commons.StepContext;
@@ -27,7 +27,7 @@ public class LoginSteps extends BaseStep {
     public void aWebBrowserIsAtTheHomePage() throws Throwable {//////////////////////////////////////////
         try {
             //Opens Main page
-            geturl();
+            geturl(stepContext.getServerURL());
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -52,10 +52,10 @@ public class LoginSteps extends BaseStep {
             // When login granted
             if ((   // Granted Access
                     Boolean.parseBoolean(granted)
-                    && findElement("pixelBalance",Pather.id,"") == null )
+                    && findElement("pixelBalance",Pather.id,TimeOut.HIGH) == null )
                     // Not Granted Access
                     ||(!Boolean.parseBoolean(granted)
-                    && findElement("pixelBalance",Pather.id,"") != null)){
+                    && findElement("pixelBalance",Pather.id,TimeOut.HIGH) != null)){
 
                 Assert.fail();
                 DriverQuit();
@@ -71,9 +71,9 @@ public class LoginSteps extends BaseStep {
     public void theUserFillsTheAndFields(String username, String password) throws Throwable {
         try {
             //Enters Username
-            findElement("email",Pather.id,"").sendKeys(username);
+            findElement("email",Pather.id,TimeOut.LOW).sendKeys(username);
             //Enters Password
-            findElement("password",Pather.id,"").sendKeys(password);
+            findElement("password",Pather.id,TimeOut.LOW).sendKeys(password);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class LoginSteps extends BaseStep {
     public void theUserPressLogin() throws Throwable {
         try {
             //Pressing Enter
-            findElement("password",Pather.id,"").sendKeys(Keys.ENTER);
+            findElement("password",Pather.id,TimeOut.LOW).sendKeys(Keys.ENTER);
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -101,15 +101,15 @@ public class LoginSteps extends BaseStep {
     @Given("the user is logged in")
     public void the_user_is_logged_in() {
         //Opens Main page
-        geturl();
+        geturl(stepContext.getServerURL());
         //Clicks login button
         findElementClick("#pixel-header > div > div.user-section > div.header-buttons-container > a.menu-text.login-button",Pather.cssSelector);
         //Enters Valid Username
-        findElement("email",Pather.id,"").sendKeys("BernardMifsud@gmail.com");
+        findElement("email",Pather.id,TimeOut.LOW).sendKeys("BernardMifsud@gmail.com");
         //Enters Valid Password
-        findElement("password",Pather.id,"").sendKeys("bV3etsZ5FG!QU5Z");
+        findElement("password",Pather.id,TimeOut.LOW).sendKeys("bV3etsZ5FG!QU5Z");
         //Press Enter key
-        findElement("password",Pather.id,"").sendKeys(Keys.ENTER);
+        findElement("password",Pather.id,TimeOut.LOW).sendKeys(Keys.ENTER);
     }
 
 }

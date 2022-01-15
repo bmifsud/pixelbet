@@ -1,6 +1,5 @@
 package com.pixel.steps.base;
 
-import com.pixel.steps.commons.StepContext;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -43,7 +42,7 @@ public class BaseStep {
     }
 
 
-    public void geturl()
+    public void geturl(String url)
     {
         //Browser to be selected here depending on config
 //        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\test\\resources\\drivers\\chromedriver.exe");
@@ -53,7 +52,7 @@ public class BaseStep {
 
 
         // Environments to be assigned here (QA, Staging, Live)
-        driver.get("https://www.pixel.bet");
+        driver.get(url);
 
     }
 
@@ -132,39 +131,7 @@ public class BaseStep {
         }
     }
 
-    public WebElement findElement(String path, Pather type, String description) {
 
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, TimeOut.MIDDLE.value);
-            WebElement element = null;
-            switch (type) {
-                case className:
-                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.className(path)));
-                    break;
-                case id:
-                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(path)));
-                    break;
-                case name:
-                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.name(path)));
-                    break;
-                case xPath:
-                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(path)));
-                    break;
-                case cssSelector:
-                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(path)));
-                    break;
-                case linkText:
-                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(path)));
-                    break;
-                default:
-                    new NotFoundException();
-            }
-            return element;
-        } catch (Exception ex) {
-            System.out.println("find element method error" + ex.getMessage());
-            return null;
-        }
-    }
 
 
     public void PageScrolldown() {

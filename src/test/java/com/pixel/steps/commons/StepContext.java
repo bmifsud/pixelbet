@@ -14,11 +14,9 @@ import static io.cucumber.spring.CucumberTestContext.SCOPE_CUCUMBER_GLUE;
 public class StepContext {
 
     private WebDriver driver;
+    private final String serverURL = "https://pixel.bet";
+    private final String languageURL = "/en";
 
-
-
-    private final String SERVER_URL = "http://localhost";
-    private final String THINGS_ENDPOINT = "/things";
 
     @PostConstruct
     public WebDriver driver(){
@@ -30,5 +28,13 @@ public class StepContext {
     }
     public WebDriver getDriver() {
         return driver;
+    }
+
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    public String getLanguageURL() {
+        return languageURL;
     }
 }
