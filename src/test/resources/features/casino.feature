@@ -1,5 +1,5 @@
 Feature: CasinoGames
-  @casino
+  @casino @UI
     Scenario Outline: User attempt to search a game through search functionality by <GameName>
     Given the user is logged in
     And the user navigates to Casino page

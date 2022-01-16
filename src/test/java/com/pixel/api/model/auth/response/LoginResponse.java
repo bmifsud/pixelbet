@@ -1,16 +1,25 @@
 package com.pixel.api.model.auth.response;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 
 public class LoginResponse {
 
-    private final LoginResponseBody body;
-    private final HttpStatus statusCode;
+    private  LoginResponseBody responseBody;
 
-    public LoginResponse(LoginResponse body, HttpStatus statusCode) {
-        this.body = body;
+    private  int statusCode;
+
+    public LoginResponse(LoginResponseBody body, int statusCode) {
+        this.responseBody = body;
         this.statusCode = statusCode;
     }
 
+    public LoginResponse(){}
 
+    public LoginResponseBody getResponseBody() {
+        return responseBody;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
 }

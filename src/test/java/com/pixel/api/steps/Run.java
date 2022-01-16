@@ -1,4 +1,4 @@
-package com.pixel.ui.steps;
+package com.pixel.api.steps;
 
 
 import io.cucumber.junit.Cucumber;
@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(monochrome = true,
         features = "src/test/resources/features/",
-        tags="@UI",
+        tags="@API",
         plugin = {"pretty", "html:target/cucumber/report"},
-        extraGlue = "com.pixel.ui.steps.commons")
+        extraGlue = "com.pixel.api.steps.commons")
 public class Run {
 }

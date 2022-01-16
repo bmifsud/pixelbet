@@ -1,5 +1,5 @@
 Feature: Login
-  @login
+  @UI @login
   Scenario Outline: User attempt login with <Username> & <Password>, will the user be <Granted> access?
     Given a web browser is at the home page
     When the user view login dialogue
@@ -18,10 +18,10 @@ Feature: Login
       #| BernardWrong@gmail.com    | bV3etsZ5FG!QU5Z   | true    |
 
 
-  @apiLogin
+  @API @login
   Scenario Outline: API User attempt login with <Username> & <Password>, will the response <StatusCode> and <ResultBody> be as expected?
     Given API User Login using <Username> and <Password> login
-    Then API User should recieve response with <StatusCode> and <ResultBody>
+    Then API User should receive response with <StatusCode> and <ResultBody>
     Examples:
       | Username                  | Password          | StatusCode | ResultBody  |
       #Valid
