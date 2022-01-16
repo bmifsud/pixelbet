@@ -1,7 +1,7 @@
-package com.pixel.steps;
+package com.pixel.ui.steps;
 
-import com.pixel.steps.base.BaseStep;
-import com.pixel.steps.commons.StepContext;
+import com.pixel.ui.steps.base.BaseStep;
+import com.pixel.ui.steps.commons.StepContext;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -30,6 +30,7 @@ public class LoginSteps extends BaseStep {
             geturl(stepContext.getServerURL());
             //Clear cookies notification
             findElementClick("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector);
+            waitForElementNotPresent("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector,TimeOut.MIDDLE);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -97,9 +98,12 @@ public class LoginSteps extends BaseStep {
 
     @And("the user exits with logout")
     public void theUserExitsWithLogout() {
-        findElementClick("#nav-menu-icon > div",Pather.cssSelector);
-        PageScrolldown();
-        findElementClick("body > div:nth-child(18) > div.fade.MenuModal.right.in.modal > div > div > div.modal-body > div.account-menu-container > a.account-menu.logout",Pather.cssSelector);
+        findElementClick(".nav-menu-inner > span:nth-child(1)",Pather.cssSelector);
+        findElementClick("Quit",Pather.linkText);
+        waitForElementNotPresent("pixelBalance",Pather.id,TimeOut.LOW);
+        if(findElement("pixelBalance",Pather.id,TimeOut.LOW) != null){
+            Assert.fail();}
+
         DriverQuit();
     }
 
@@ -110,16 +114,19 @@ public class LoginSteps extends BaseStep {
         geturl(stepContext.getServerURL());
         //Clear cookies notification
         findElementClick("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector);
+        waitForElementNotPresent("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector,TimeOut.MIDDLE);
         //Clicks login button
         findElementClick("#pixel-header > div > div.user-section > div.header-buttons-container > a.menu-text.login-button",Pather.cssSelector);
         //Enters Valid Username
-        findElement("email",Pather.id,TimeOut.LOW).sendKeys("BernardMifsud@gmail.com");
+        findElement("email",Pather.id,TimeOut.MIDDLE).sendKeys("BernardMifsud@gmail.com");
         //Enters Valid Password
-        findElement("password",Pather.id,TimeOut.LOW).sendKeys("bV3etsZ5FG!QU5Z");
+        findElement("password",Pather.id,TimeOut.MIDDLE).sendKeys("bV3etsZ5FG!QU5Z");
         //Press Enter key
-        findElement("password",Pather.id,TimeOut.LOW).sendKeys(Keys.ENTER);
+        findElement("password",Pather.id,TimeOut.MIDDLE).sendKeys(Keys.ENTER);
         //Confirms login
-        if(findElement("pixelBalance",Pather.id,TimeOut.HIGH) == null){Assert.fail();}
+        if(findElement("pixelBalance",Pather.id,TimeOut.HIGH) == null){
+            Assert.fail();
+            DriverQuit();}
     }
 
 }

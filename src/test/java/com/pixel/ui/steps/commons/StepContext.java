@@ -1,4 +1,4 @@
-package com.pixel.steps.commons;
+package com.pixel.ui.steps.commons;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

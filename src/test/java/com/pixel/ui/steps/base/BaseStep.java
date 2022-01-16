@@ -1,13 +1,10 @@
-package com.pixel.steps.base;
+package com.pixel.ui.steps.base;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.nio.file.Path;
 import java.util.List;
 
 
@@ -193,33 +190,31 @@ public class BaseStep {
         catch (Exception ex){}
     }
 
-    public void SelectFrame(String path, Pather type,TimeOut timeOut) {
+    public void SelectFrame(String path, Pather type) {
 
         try {
-            WebDriverWait wait = new WebDriverWait(driver, timeOut.value);
             switch (type) {
                 case className:
-                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.className(path)));
+                    driver.switchTo().frame(driver.findElement(By.className(path)));
                     break;
                 case id:
-                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id(path)));
+                    driver.switchTo().frame(driver.findElement(By.id(path)));
                     break;
                 case name:
-                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.name(path)));
+                    driver.switchTo().frame(driver.findElement(By.name(path)));
                     break;
                 case xPath:
-                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath(path)));
+                    driver.switchTo().frame(driver.findElement(By.xpath(path)));
                     break;
                 case cssSelector:
-                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector(path)));
+                    driver.switchTo().frame(driver.findElement(By.cssSelector(path)));
                     break;
                 case linkText:
-                    wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.linkText(path)));
+                    driver.switchTo().frame(driver.findElement(By.linkText(path)));
                     break;
                 default:
                     new NotFoundException();
             }
-
         }
         catch (Exception ex){}
     }
@@ -264,7 +259,7 @@ public class BaseStep {
 
     public void PageScrolldown() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        jse.executeScript("window.scrollTo(0, 1000)");
 
     }
 

@@ -1,6 +1,6 @@
 Feature: Login
   @login
-  Scenario Outline: User attempt login with <Username> & <Password>, will the user be <Granted> access.
+  Scenario Outline: User attempt login with <Username> & <Password>, will the user be <Granted> access?
     Given a web browser is at the home page
     When the user view login dialogue
     And the user fills the <Username> and <Password> fields
@@ -16,3 +16,13 @@ Feature: Login
       | WrongUsenrame@gmail.com   | bV3etsZ5FG!QU5Z   | false   |
       #Test Validator (Test Expected to fail)
       #| BernardWrong@gmail.com    | bV3etsZ5FG!QU5Z   | true    |
+
+
+  @apiLogin
+  Scenario Outline: API User attempt login with <Username> & <Password>, will the response <StatusCode> and <ResultBody> be as expected?
+    Given API User Login using <Username> and <Password> login
+    Then API User should recieve response with <StatusCode> and <ResultBody>
+    Examples:
+      | Username                  | Password          | StatusCode | ResultBody  |
+      #Valid
+      | BernardMifsud@gmail.com   | bV3etsZ5FG!QU5Z   | 200        |Success      |
