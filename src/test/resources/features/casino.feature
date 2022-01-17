@@ -12,14 +12,11 @@ Feature: CasinoGames
     Examples:
       | GameName                  |
       #Valid
-#      | Fat Rabbit                |
-#      | Cash Truck                |
-#      | Book of Dead              |
-#      | Congo Cash                |
-      | Temple Tumble             |
+      | Fat Rabbit                |
+      | Cash Truck                |
+      | Book of Dead              |
+      | Congo Cash                |
       | 10001 Nights              |
       | Tombstone R.I.P           |
-      | Legion X                  |
-      | Wild Depths               |
       #Test Validator (Test Expected to fail)
-      #| InvalidName              |
+#      | InvalidName              |

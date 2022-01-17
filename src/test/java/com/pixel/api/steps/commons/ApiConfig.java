@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 
 import static io.cucumber.spring.CucumberTestContext.SCOPE_CUCUMBER_GLUE;
 
+//Basic template to run rest API test calls
 @Configuration
 @Scope(SCOPE_CUCUMBER_GLUE)
 public class ApiConfig {

@@ -29,7 +29,7 @@ public class APILoginSteps{
 
     @Then("^API User should receive response with (.+) and (.+)$")
     public void aPIUserShouldReceiveResponseWithAnd(int statusCode, String resultbody) throws Throwable {
-
+        //verifies status code and body result
         if(statusCode != loginResponse.getStatusCode() && resultbody != loginResponse.getResponseBody().getResult()){
             Assert.fail();
         }

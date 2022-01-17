@@ -21,17 +21,18 @@ public class ApiClient {
     private HttpHeaders headers = new HttpHeaders();
 
     public ApiClient() {
+        // Default Headers
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Lists.newArrayList(MediaType.APPLICATION_JSON));
     }
-
+    // Authentication call
     public LoginResponse apiLogin(String email, String password) {
         ResponseEntity<LoginResponseBody> response = apiConfig.getRestTemplate().exchange("/user/authenticate",
                 HttpMethod.POST,
                 new HttpEntity<>(new LoginRequest(email, password), headers),
                 LoginResponseBody.class);
 
-
+       //returns 2 main responses to be asserted
        return new LoginResponse(response.getBody(),response.getStatusCode().value());
 
     }

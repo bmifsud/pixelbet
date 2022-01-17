@@ -29,8 +29,11 @@ public class LoginSteps extends BaseStep {
             //Opens Main page
             geturl(stepContext.getServerURL());
             //Clear cookies notification
-            findElementClick("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector);
-            waitForElementNotPresent("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector,TimeOut.MIDDLE);
+            findElementClick("#app > div > div > div.cookie-notice > div > a",
+                    Pather.cssSelector);
+            waitForElementNotPresent("#app > div > div > div.cookie-notice > div > a",
+                    Pather.cssSelector,
+                    TimeOut.MIDDLE);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -42,7 +45,8 @@ public class LoginSteps extends BaseStep {
 
         try {
             //Clicks login button
-            findElementClick("#pixel-header > div > div.user-section > div.header-buttons-container > a.menu-text.login-button",Pather.cssSelector);
+            findElementClick("#pixel-header > div > div.user-section > div.header-buttons-container > a.menu-text.login-button",
+                    Pather.cssSelector);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -55,10 +59,14 @@ public class LoginSteps extends BaseStep {
             // When login granted
             if ((   // Granted Access
                     Boolean.parseBoolean(granted)
-                    && findElement("pixelBalance",Pather.id,TimeOut.HIGH) == null )
+                    && findElement("pixelBalance",
+                            Pather.id,
+                            TimeOut.LOW) == null )
                     // Not Granted Access
                     ||(!Boolean.parseBoolean(granted)
-                    && findElement("pixelBalance",Pather.id,TimeOut.HIGH) != null)){
+                    && findElement("pixelBalance",
+                            Pather.id,
+                            TimeOut.LOW) != null)){
 
                 //Then above true then fail test
                 Assert.fail();
@@ -75,9 +83,13 @@ public class LoginSteps extends BaseStep {
     public void theUserFillsTheAndFields(String username, String password) throws Throwable {
         try {
             //Enters Username
-            findElement("email",Pather.id,TimeOut.LOW).sendKeys(username);
+            findElement("email",
+                    Pather.id,
+                    TimeOut.LOW).sendKeys(username);
             //Enters Password
-            findElement("password",Pather.id,TimeOut.LOW).sendKeys(password);
+            findElement("password",
+                    Pather.id,
+                    TimeOut.LOW).sendKeys(password);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -87,7 +99,14 @@ public class LoginSteps extends BaseStep {
     public void theUserPressLogin() throws Throwable {
         try {
             //Pressing Enter
-            findElement("password",Pather.id,TimeOut.MIDDLE).sendKeys(Keys.ENTER);
+            SelectFrame("loadingContainer",Pather.id);
+            findElement("body > div:nth-child(21) > div.fade.PixelLightModal.login-modal.in.modal > div > div > div.modal-body > div > div > form > div.forgot-password-submit-container > button",
+                    Pather.id,
+                    TimeOut.LOW);
+            //Press Enter key
+            findElement("password",
+                    Pather.id,
+                    TimeOut.LOW).sendKeys(Keys.ENTER);
 
 
         }catch (Exception ex){
@@ -100,10 +119,6 @@ public class LoginSteps extends BaseStep {
     public void theUserExitsWithLogout() {
         findElementClick(".nav-menu-inner > span:nth-child(1)",Pather.cssSelector);
         findElementClick("Quit",Pather.linkText);
-        waitForElementNotPresent("pixelBalance",Pather.id,TimeOut.LOW);
-        if(findElement("pixelBalance",Pather.id,TimeOut.LOW) != null){
-            Assert.fail();}
-
         DriverQuit();
     }
 
@@ -116,17 +131,36 @@ public class LoginSteps extends BaseStep {
         findElementClick("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector);
         waitForElementNotPresent("#app > div > div > div.cookie-notice > div > a",Pather.cssSelector,TimeOut.MIDDLE);
         //Clicks login button
-        findElementClick("#pixel-header > div > div.user-section > div.header-buttons-container > a.menu-text.login-button",Pather.cssSelector);
+        findElementClick("#pixel-header > div > div.user-section > div.header-buttons-container > a.menu-text.login-button",
+                Pather.cssSelector);
         //Enters Valid Username
-        findElement("email",Pather.id,TimeOut.MIDDLE).sendKeys("BernardMifsud@gmail.com");
+        findElement("email",
+                Pather.id,
+                TimeOut.MIDDLE).sendKeys("BernardMifsud@gmail.com");
         //Enters Valid Password
-        findElement("password",Pather.id,TimeOut.MIDDLE).sendKeys("bV3etsZ5FG!QU5Z");
+        findElement("password",
+                Pather.id,
+                TimeOut.MIDDLE).sendKeys("bV3etsZ5FG!QU5Z");
+        SelectFrame("loadingContainer",
+                Pather.id);
+        findElement("body > div:nth-child(21) > div.fade.PixelLightModal.login-modal.in.modal > div > div > div.modal-body > div > div > form > div.forgot-password-submit-container > button",
+                Pather.id,
+                TimeOut.LOW);
         //Press Enter key
         findElement("password",Pather.id,TimeOut.MIDDLE).sendKeys(Keys.ENTER);
         //Confirms login
-        if(findElement("pixelBalance",Pather.id,TimeOut.HIGH) == null){
+        if(findElement("pixelBalance",
+                Pather.id,
+                TimeOut.LOW) == null){
             Assert.fail();
             DriverQuit();}
     }
+
+
+    @And("^the user close browser $")
+    public void theUserCloseBrowser() throws Throwable {
+        DriverQuit();
+    }
+
 
 }
